@@ -13,13 +13,13 @@ class MaliciousFlowQuarantineTopo(Topo):
         s4 = self.addSwitch('s4', dpid='4')  # Quarantine switch
 
        # Add hosts
-        h1 = self.addHost('h1', ip='192.168.1.1/24')
-        h2 = self.addHost('h2', ip='192.168.1.2/24')
+        h1 = self.addHost('h1', ip='192.168.1.2/24', defaultRoute = "192.168.1.2")
+        h2 = self.addHost('h2', ip='192.168.1.3/24', defaultRoute = "via 192.168.1.3")
 
         # Add servers
-        srv1 = self.addHost('srv1', ip='10.0.0.1/24')
-        srv2 = self.addHost('srv2', ip='10.0.0.2/24')
-        srv3 = self.addHost('srv3', ip='10.0.1.1/24')  # Different subnet
+        srv1 = self.addHost('srv1', ip='10.0.0.2/24', defaultRoute = "via 10.0.0.2")
+        srv2 = self.addHost('srv2', ip='10.0.0.3/24', defaultRoute = "via 10.0.0.3")
+        srv3 = self.addHost('srv3', ip='10.0.1.2/24', defaultRoute = "via 10.0.1.2")  # Different subnet
 
         # Connect hosts to their switch
         self.addLink(h1, s1)
