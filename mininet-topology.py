@@ -48,10 +48,10 @@ def run():
     net.start()
 
     # Display DPIDs & MAC Addresses
-    print("\n🔹 Switch DPIDs and MAC Addresses:")
+    print("\n🔹 Switch DPIDs")
     for switch in net.switches:
         mac = switch.MAC()
-        print(f"🔸 {switch.name}: DPID={switch.dpid}, MAC={mac}")
+        print(f"🔸 {switch.name}: DPID={switch.dpid}")
 
     print("\n🔹 Host MAC Addresses:")
     for host in net.hosts:
