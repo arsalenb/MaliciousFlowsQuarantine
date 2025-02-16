@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.projectfloodlight.openflow.protocol.OFMessage;
 import org.projectfloodlight.openflow.protocol.OFType;
+import org.projectfloodlight.openflow.util.HexString;
 
 import net.floodlightcontroller.core.FloodlightContext;
 import net.floodlightcontroller.core.IFloodlightProviderService;
@@ -15,38 +16,42 @@ import net.floodlightcontroller.core.module.FloodlightModuleContext;
 import net.floodlightcontroller.core.module.FloodlightModuleException;
 import net.floodlightcontroller.core.module.IFloodlightModule;
 import net.floodlightcontroller.core.module.IFloodlightService;
+import net.floodlightcontroller.packet.Ethernet;
 
 public class MaliciousFlowsQuarantine implements IOFMessageListener, IFloodlightModule {
+	
+	protected IFloodlightProviderService floodlightProvider; // Reference to the provider
 
-	protected IFloodlightProviderService floodlightProvider;
+	// Fixed DPID of Quarantine Switch
+	private final static String quarantineSwitchDpid = "00:00:00:00:00:00:00:04";
+	
+	// Rule timeouts
+	private final static short IDLE_TIMEOUT = 60;
+	private final static short HARD_TIMEOUT = 120; 
+
 	
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return MaliciousFlowsQuarantine.class.getSimpleName();
 	}
 
 	@Override
 	public boolean isCallbackOrderingPrereq(OFType type, String name) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean isCallbackOrderingPostreq(OFType type, String name) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public Collection<Class<? extends IFloodlightService>> getModuleServices() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Map<Class<? extends IFloodlightService>, IFloodlightService> getServiceImpls() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -66,14 +71,22 @@ public class MaliciousFlowsQuarantine implements IOFMessageListener, IFloodlight
 
 	@Override
 	public void startUp(FloodlightModuleContext context) throws FloodlightModuleException {
-		// TODO Auto-generated method stub
+		floodlightProvider.addOFMessageListener(OFType.PACKET_IN, this);
 
 	}
 
 	@Override
-	public Command receive(IOFSwitch sw, OFMessage msg, FloodlightContext cntx) {
-		// TODO Auto-generated method stub
-		return null;
+	public net.floodlightcontroller.core.IListener.Command receive(IOFSwitch sw, OFMessage msg,
+			FloodlightContext cntx) {
+	    Ethernet eth = IFloodlightProviderService.bcStore.get(cntx, IFloodlightProviderService.CONTEXT_PI_PAYLOAD);
+	    // Print the source MAC address
+	    Long sourceMACHash = Ethernet.toLong(eth.getSourceMACAddress().getBytes());
+	    System.out.printf("MAC Address: {%s} seen on switch: {%s}\n",
+		HexString.toHexString(sourceMACHash),
+	         	sw.getId());   
+	    // Let other modules process the packet
+	    return Command.CONTINUE;
+
 	}
 
 }
