@@ -8,11 +8,11 @@ import java.util.Queue;
 
 import org.projectfloodlight.openflow.protocol.OFMessage;
 
-public class FlowBuffer {
+public class PacketsBuffer {
     private Queue<OFMessage> buffer;
     private int maxSize;
 
-    public FlowBuffer(int size) {
+    public PacketsBuffer(int size) {
         this.maxSize = size;
         this.buffer = new ArrayDeque<>(size);
     }
