@@ -8,6 +8,9 @@ import net.floodlightcontroller.core.web.ControllerSummaryResource;
 import net.floodlightcontroller.core.web.ControllerSwitchesResource;
 import net.floodlightcontroller.core.web.LoadedModuleLoaderResource;
 import net.floodlightcontroller.restserver.RestletRoutable;
+import net.floodlightcontroller.unipi.maliciousflowsquarantine.api.resources.BufferSize;
+import net.floodlightcontroller.unipi.maliciousflowsquarantine.api.resources.MarkFlow;
+import net.floodlightcontroller.unipi.maliciousflowsquarantine.api.resources.UnmarkFlow;
 
 public class MaliciousFlowsQuarantineWebRoutable implements RestletRoutable {
 

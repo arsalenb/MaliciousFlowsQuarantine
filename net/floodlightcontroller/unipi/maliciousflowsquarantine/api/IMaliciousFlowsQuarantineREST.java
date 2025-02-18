@@ -4,7 +4,7 @@ import net.floodlightcontroller.core.module.IFloodlightService;
 
 public interface IMaliciousFlowsQuarantineREST extends IFloodlightService {
     
-    public Integer retrieveTotalBufferedPackets(String id);
+    public int retrieveTotalBufferedPackets(String id);
 
     public String markFlow(String clientIP, String serverIP, int bufferSize);
 
