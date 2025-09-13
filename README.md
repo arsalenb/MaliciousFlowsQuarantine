@@ -2,7 +2,7 @@
 
 This project was developed for the **Advanced Network Architectures and Wireless Systems** course. The goal was to design and implement a **quarantine mechanism** to handle malicious network flows in Software-Defined Networking (SDN) environments.
 
-Marked malicious flows are rerouted to a **quarantine switch**, which forwards their packets to the controller for buffering. The controller then decides whether to **drop** the packets or **flush** them to their intended destinations, enabling fine-grained traffic control and security enforcement.
+Marked malicious flows are rerouted to a **quarantine switch**, which forwards their packets to the controller for buffering. The controller then decides whether to **drop** the packets or **flush** them to their intended destinations.
 
 ---
 
